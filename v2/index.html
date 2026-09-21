@@ -18,23 +18,15 @@
       </div>
 
       <nav class="nav" aria-label="Điều hướng chính">
-        <button class="nav-item active" data-view="overview">
-          <span class="nav-icon">▦</span><span>Tổng quan</span>
-        </button>
-        <button class="nav-item" data-view="vbdh">
-          <span class="nav-icon">▤</span><span>Nhiệm vụ VBDH</span>
-        </button>
-        <button class="nav-item" data-view="internal">
-          <span class="nav-icon">⌂</span><span>Nhiệm vụ nội bộ</span>
-        </button>
-        <button class="nav-item" data-view="search">
-          <span class="nav-icon">⌕</span><span>Tra cứu</span>
-        </button>
+        <button class="nav-item active" data-view="overview"><span class="nav-icon">▦</span><span>Tổng quan</span></button>
+        <button class="nav-item" data-view="vbdh"><span class="nav-icon">▤</span><span>Nhiệm vụ VBDH</span></button>
+        <button class="nav-item" data-view="reports"><span class="nav-icon">▥</span><span>Báo cáo</span></button>
+        <button class="nav-item" data-view="search"><span class="nav-icon">⌕</span><span>Tra cứu</span></button>
       </nav>
 
       <div class="sidebar-footer">
         <div class="env-label">V2 PROTOTYPE</div>
-        <div class="env-text">Không thay đổi bản V1 đang chạy</div>
+        <div class="env-text">Schema V2.1 · dữ liệu public chỉ là demo</div>
       </div>
     </aside>
 
@@ -43,17 +35,16 @@
         <div>
           <div class="eyebrow">QUẢN LÝ VĂN BẢN VÀ ĐIỀU HÀNH</div>
           <h1 id="pageTitle">Tổng quan nhiệm vụ</h1>
-          <p class="subtitle">Theo dõi, phân công và đôn đốc nhiệm vụ của Cục Quản lý nợ và Kinh tế đối ngoại</p>
+          <p class="subtitle">Theo dõi nhiệm vụ VBDH, thời hạn và trạng thái xử lý theo snapshot</p>
         </div>
         <div class="topbar-right">
-          <span class="demo-pill">DỮ LIỆU DEMO</span>
+          <span class="demo-pill">DEMO PUBLIC</span>
           <div class="today" id="todayLabel">—</div>
         </div>
       </header>
 
       <div class="demo-banner">
-        <strong>Bản thử nghiệm V2:</strong>
-        số liệu tổng hợp mô phỏng theo ảnh VBDH ngươi cung cấp; tên nhiệm vụ và số văn bản bên dưới là dữ liệu mẫu, chưa phải dữ liệu nghiệp vụ chính thức.
+        <strong>Bản public an toàn:</strong> dữ liệu bên dưới là dữ liệu minh họa giả. Cấu trúc đã bám schema database V2.1 nhưng không chứa nội dung VBDH thật.
       </div>
 
       <section id="overviewView" class="view">
@@ -63,23 +54,24 @@
           <section class="card chart-card">
             <div class="card-head">
               <div>
-                <h2>Nhiệm vụ đang xử lý theo đơn vị</h2>
-                <p>Phân nhóm theo trạng thái trên VBDH</p>
+                <h2>37? Không — đây là demo</h2>
+                <p>Phân loại quản trị của các nhiệm vụ chưa hoàn thành trong bộ dữ liệu minh họa</p>
               </div>
               <div class="legend">
                 <span><i class="dot overdue"></i>Quá hạn</span>
                 <span><i class="dot upcoming"></i>Sắp đến hạn</span>
                 <span><i class="dot notdue"></i>Chưa đến hạn</span>
+                <span><i class="dot nodue"></i>Chưa có hạn</span>
               </div>
             </div>
-            <div class="dept-chart" id="deptChart"></div>
+            <div class="status-chart" id="statusChart"></div>
           </section>
 
           <section class="card attention-card">
             <div class="card-head">
               <div>
                 <h2>Cần chú ý</h2>
-                <p>Ưu tiên các việc quá hạn và sắp đến hạn</p>
+                <p>Ưu tiên việc quá hạn và sắp đến hạn</p>
               </div>
               <button class="text-btn" id="showAllUrgent">Xem danh sách →</button>
             </div>
@@ -90,8 +82,8 @@
         <section class="card table-card">
           <div class="card-head">
             <div>
-              <h2>Nhiệm vụ gần nhất</h2>
-              <p>Bấm vào một dòng để xem chi tiết</p>
+              <h2>Nhiệm vụ đang xử lý</h2>
+              <p>Chỉ hiển thị các nhiệm vụ chưa hoàn thành</p>
             </div>
             <button class="primary-btn" id="openAllTasks">Mở danh sách đầy đủ</button>
           </div>
@@ -100,11 +92,11 @@
               <thead>
                 <tr>
                   <th>Mã nhiệm vụ</th>
-                  <th>Số văn bản</th>
                   <th>Nội dung</th>
-                  <th>Đơn vị</th>
-                  <th>Thời hạn</th>
-                  <th>Trạng thái</th>
+                  <th>Lãnh đạo Bộ</th>
+                  <th>Phòng xử lý</th>
+                  <th>Hạn</th>
+                  <th>Phân loại</th>
                 </tr>
               </thead>
               <tbody id="recentTasksBody"></tbody>
@@ -116,24 +108,20 @@
       <section id="tasksView" class="view hidden">
         <section class="card filters-card">
           <div class="filters">
-            <label class="search-box">
-              <span>⌕</span>
-              <input id="searchInput" type="search" placeholder="Tìm số văn bản, nhiệm vụ, đơn vị, người xử lý...">
-            </label>
-            <select id="departmentFilter" aria-label="Lọc đơn vị">
-              <option value="">Tất cả đơn vị</option>
-            </select>
-            <select id="statusFilter" aria-label="Lọc trạng thái">
-              <option value="">Tất cả trạng thái</option>
+            <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Tìm mã nhiệm vụ, nội dung, lãnh đạo, phòng..."></label>
+            <select id="departmentFilter"><option value="">Tất cả phòng</option></select>
+            <select id="statusFilter">
+              <option value="">Tất cả phân loại</option>
               <option value="Quá hạn">Quá hạn</option>
               <option value="Sắp đến hạn">Sắp đến hạn</option>
               <option value="Chưa đến hạn">Chưa đến hạn</option>
-              <option value="Đã hoàn thành">Đã hoàn thành</option>
+              <option value="Chưa có hạn">Chưa có hạn</option>
+              <option value="Hoàn thành">Hoàn thành</option>
             </select>
-            <select id="sourceFilter" aria-label="Lọc nguồn dữ liệu">
-              <option value="">Tất cả nguồn</option>
-              <option value="VBDH Bộ">VBDH Bộ</option>
-              <option value="Nội bộ Cục">Nội bộ Cục</option>
+            <select id="vbdhStatusFilter">
+              <option value="">Tất cả trạng thái VBDH</option>
+              <option value="Chưa hoàn thành">Chưa hoàn thành</option>
+              <option value="Hoàn thành">Hoàn thành</option>
             </select>
             <button class="ghost-btn" id="resetFilters">Đặt lại</button>
           </div>
@@ -151,13 +139,13 @@
               <thead>
                 <tr>
                   <th>Mã</th>
-                  <th>Số văn bản</th>
+                  <th>Ngày chỉ đạo</th>
                   <th>Nội dung nhiệm vụ</th>
-                  <th>Đơn vị</th>
-                  <th>Người xử lý</th>
+                  <th>Lãnh đạo Bộ</th>
+                  <th>Phòng xử lý</th>
                   <th>Hạn</th>
-                  <th>Trạng thái</th>
-                  <th>Tiến độ</th>
+                  <th>Trạng thái VBDH</th>
+                  <th>Phân loại</th>
                 </tr>
               </thead>
               <tbody id="tasksBody"></tbody>
@@ -166,17 +154,29 @@
           <div class="empty-state hidden" id="emptyState">
             <div class="empty-icon">⌕</div>
             <h3>Không có nhiệm vụ phù hợp</h3>
-            <p>Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm.</p>
+            <p>Thử thay đổi bộ lọc hoặc từ khóa.</p>
           </div>
         </section>
       </section>
 
-      <section id="internalView" class="view hidden">
-        <section class="card placeholder-card">
-          <div class="placeholder-icon">＋</div>
-          <h2>Nguồn nhiệm vụ nội bộ Cục</h2>
-          <p>Khung giao diện đã sẵn sàng. Bước tiếp theo sẽ nối sổ riêng của 12 phòng và Master để các nhiệm vụ không có trên VBDH cũng xuất hiện tại đây.</p>
-          <button class="primary-btn" id="backOverview">Quay về Tổng quan</button>
+      <section id="reportsView" class="view hidden">
+        <div class="report-grid">
+          <section class="card report-card" data-period="q3">
+            <div class="report-kicker">QUÝ III/2026</div>
+            <h2>Báo cáo Quý III</h2>
+            <p>Khung báo cáo theo Ngày chỉ đạo trong khoảng 01/07 đến ngày snapshot.</p>
+            <div class="report-metrics" id="q3Metrics"></div>
+          </section>
+          <section class="card report-card" data-period="sep">
+            <div class="report-kicker">THÁNG 9/2026</div>
+            <h2>Báo cáo tháng 9</h2>
+            <p>Khung báo cáo theo Ngày chỉ đạo từ 01/09 đến ngày snapshot.</p>
+            <div class="report-metrics" id="sepMetrics"></div>
+          </section>
+        </div>
+        <section class="card report-note">
+          <h2>Nguyên tắc báo cáo</h2>
+          <p>Trạng thái Hoàn thành/Chưa hoàn thành lấy từ snapshot VBDH. Phân loại Quá hạn/Sắp đến hạn/Chưa đến hạn/Chưa có hạn là lớp quản trị tính từ hạn xử lý. Dữ liệu hoàn thành được giữ để phục vụ báo cáo lịch sử.</p>
         </section>
       </section>
     </main>
@@ -185,10 +185,7 @@
   <div class="drawer-backdrop hidden" id="drawerBackdrop"></div>
   <aside class="task-drawer" id="taskDrawer" aria-hidden="true">
     <div class="drawer-head">
-      <div>
-        <div class="drawer-kicker">CHI TIẾT NHIỆM VỤ</div>
-        <h2 id="drawerTitle">—</h2>
-      </div>
+      <div><div class="drawer-kicker">CHI TIẾT NHIỆM VỤ</div><h2 id="drawerTitle">—</h2></div>
       <button class="close-btn" id="closeDrawer" aria-label="Đóng">×</button>
     </div>
     <div class="drawer-body" id="drawerBody"></div>
