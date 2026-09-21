@@ -1,4 +1,4 @@
-import { loadTasks, DEMO_AS_OF } from "./data.js";
+import { loadTasks, DEMO_AS_OF, PUBLISH_START } from "./data.js";
 
 const state={tasks:[],view:"overview",query:"",department:"",status:"",vbdhStatus:""};
 const $=(id)=>document.getElementById(id);
@@ -91,7 +91,7 @@ function filteredTasks(){
 }
 function renderTaskTable(){
   const list=filteredTasks();
-  $("taskCount").textContent=list.length+" nhiệm vụ phù hợp · demo snapshot "+DEMO_AS_OF;
+  $("taskCount").textContent=list.length+" nhiệm vụ phù hợp · phạm vi "+PUBLISH_START+"–"+DEMO_AS_OF;
   $("tasksBody").innerHTML=list.map(t=>taskRow(t,false)).join("");
   $("emptyState").classList.toggle("hidden",list.length>0);
   wireRows($("tasksBody"));
@@ -100,7 +100,7 @@ function metricHtml(c){
   return '<div><strong>'+c.total+'</strong><span>Tổng</span></div><div><strong>'+c.done+'</strong><span>Hoàn thành</span></div><div><strong>'+c.open+'</strong><span>Chưa hoàn thành</span></div><div><strong>'+c.overdue+'</strong><span>Quá hạn</span></div>';
 }
 function renderReports(){
-  $("q3Metrics").innerHTML=metricHtml(counts(state.tasks.filter(t=>t.quarter==="2026-Q3")));
+  $("publishMetrics").innerHTML=metricHtml(counts(state.tasks));
   $("sepMetrics").innerHTML=metricHtml(counts(state.tasks.filter(t=>t.month==="2026-09")));
 }
 function detail(label,value,wide){
