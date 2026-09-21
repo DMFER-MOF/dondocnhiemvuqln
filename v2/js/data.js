@@ -1,4 +1,5 @@
 export const DEMO_AS_OF = "21/09/2026";
+export const PUBLISH_START = "15/08/2026";
 export const WARN_DAYS = 5;
 
 const leaders = ["Lãnh đạo Bộ A","Lãnh đạo Bộ B","Lãnh đạo Bộ C"];
@@ -56,8 +57,6 @@ export function buildDemoTasks(){
     makeTask(8,"Hoàn thành","Hoàn thành","28/08/2026","2026-08",rooms[0]),
     makeTask(9,"Hoàn thành","Hoàn thành","20/08/2026","2026-08",rooms[1]),
     makeTask(10,"Chưa hoàn thành","Chưa có hạn","","2026-08",rooms[2]),
-    makeTask(11,"Hoàn thành","Hoàn thành","30/07/2026","2026-07",rooms[0]),
-    makeTask(12,"Chưa hoàn thành","Chưa đến hạn","30/09/2026","2026-07",rooms[2])
   ];
 }
 
