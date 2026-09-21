@@ -1,4 +1,4 @@
-import { loadTasks, DEMO_AS_OF, PUBLISH_START } from "./data.js";
+import { loadTasks, DATA_AS_OF, PUBLISH_START } from "./data.js";
 
 const state={tasks:[],view:"overview",query:"",department:"",status:"",vbdhStatus:""};
 const $=(id)=>document.getElementById(id);
@@ -91,7 +91,7 @@ function filteredTasks(){
 }
 function renderTaskTable(){
   const list=filteredTasks();
-  $("taskCount").textContent=list.length+" nhiệm vụ phù hợp · phạm vi "+PUBLISH_START+"–"+DEMO_AS_OF;
+  $("taskCount").textContent=list.length+" nhiệm vụ phù hợp · phạm vi "+PUBLISH_START+"–"+DATA_AS_OF;
   $("tasksBody").innerHTML=list.map(t=>taskRow(t,false)).join("");
   $("emptyState").classList.toggle("hidden",list.length>0);
   wireRows($("tasksBody"));
@@ -146,7 +146,7 @@ function setView(view){
 function bind(){
   document.querySelectorAll(".nav-item").forEach(btn=>btn.addEventListener("click",()=>setView(btn.dataset.view)));
   $("openAllTasks").addEventListener("click",()=>setView("vbdh"));
-  $("showAllUrgent").addEventListener("click",()=>{setView("vbdh");state.status="Sắp đến hạn";$("statusFilter").value="Sắp đến hạn";renderTaskTable();});
+  $("showAllUrgent").addEventListener("click",()=>{setView("vbdh");state.status="";$("statusFilter").value="";renderTaskTable();});
   $("closeDrawer").addEventListener("click",closeDrawer);
   $("drawerBackdrop").addEventListener("click",closeDrawer);
   document.addEventListener("keydown",e=>{if(e.key==="Escape") closeDrawer();});
