@@ -30,9 +30,9 @@ function renderDate(){
 function renderKPIs(){
   const c=counts(state.tasks);
   const items=[
-    ["Tổng nhiệm vụ",c.total,"Tất cả record trong snapshot",""],
-    ["Hoàn thành",c.done,"Trạng thái xác nhận từ VBDH","done"],
-    ["Chưa hoàn thành",c.open,"Ưu tiên vận hành","open"],
+    ["Tổng nhiệm vụ",c.total,"Nhiệm vụ trích xuất từ VBDH",""],
+    ["Hoàn thành",c.done,"Đã hoàn thành trên hệ thống VBDH","done"],
+    ["Chưa hoàn thành",c.open,"Đang xử lý, đã phân về Phòng","open"],
     ["Cần chú ý",c.overdue+c.upcoming,"Quá hạn + sắp đến hạn","upcoming"]
   ];
   $("kpiGrid").innerHTML=items.map(x=>'<article class="kpi '+x[3]+'"><div class="kpi-label">'+esc(x[0])+'</div><div class="kpi-value">'+x[1]+'</div><div class="kpi-note">'+esc(x[2])+'</div></article>').join("");
