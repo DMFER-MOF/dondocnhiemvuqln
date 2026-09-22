@@ -6,6 +6,12 @@ const $=(id)=>document.getElementById(id);
 function esc(v){
   return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
 }
+function liveTrackingDate(){
+  return new Date().toLocaleDateString("vi-VN",{day:"2-digit",month:"2-digit",year:"numeric"});
+}
+function renderLiveTrackingDates(){
+  document.querySelectorAll("[data-live-track-date]").forEach(el=>{el.textContent=liveTrackingDate();});
+}
 function statusClass(s){
   if(s==="Quá hạn") return "overdue";
   if(s==="Sắp đến hạn") return "upcoming";
@@ -47,7 +53,7 @@ function taskRow(t,compact){
   return '<tr data-task-id="'+esc(t.task_id)+'">'+
     '<td><strong>'+esc(t.source_id)+'</strong><div class="cell-sub">'+esc(t.source_system)+'</div></td>'+
     (compact?'':'<td>'+esc(t.directive_date)+'</td>')+
-    '<td><div class="cell-title">'+esc(t.title)+'</div><div class="cell-sub">Snapshot: '+esc(t.snapshot_date)+'</div></td>'+
+    '<td><div class="cell-title">'+esc(t.title)+'</div><div class="cell-sub">Ngày theo dõi: '+esc(liveTrackingDate())+'</div></td>'+
     '<td>'+esc(t.minister_leader)+'</td>'+
     '<td>'+esc(t.department_name||"Chưa cập nhật")+'</td>'+
     '<td>'+esc(t.due_date||"—")+'</td>'+
@@ -102,6 +108,7 @@ function metricHtml(c){
 function renderReports(){
   $("publishMetrics").innerHTML=metricHtml(counts(state.tasks));
   $("sepMetrics").innerHTML=metricHtml(counts(state.tasks.filter(t=>t.month==="2026-09")));
+  renderLiveTrackingDates();
 }
 function detail(label,value,wide){
   return '<div class="detail '+(wide?"wide":"")+'"><div class="detail-label">'+esc(label)+'</div><div class="detail-value">'+esc(value||"—")+'</div></div>';
@@ -113,7 +120,7 @@ function openDrawer(t){
     detail("Ngày tạo",t.created_date)+detail("Ngày chỉ đạo",t.directive_date)+
     detail("Lãnh đạo Bộ",t.minister_leader)+detail("Phòng xử lý",t.department_name||"Chưa cập nhật")+
     detail("Hạn xử lý",t.due_date||"Chưa có hạn")+detail("Trạng thái VBDH",t.vbdh_status)+
-    detail("Phân loại quản trị",t.management_status)+detail("Snapshot",t.snapshot_date)+
+    detail("Phân loại quản trị",t.management_status)+detail("Ngày theo dõi",liveTrackingDate())+
     detail("Nhiệm vụ cha",t.parent_title,true)+detail("Chủ trì VBDH",t.lead_vbdh,true)+
     '</div><div class="drawer-section">Phân công nội bộ</div><div class="detail-grid">'+
     detail("Lãnh đạo Cục",t.bureau_leader)+detail("Lãnh đạo Phòng",t.room_leader)+
@@ -160,6 +167,6 @@ function bind(){
   });
 }
 async function init(){
-  renderDate(); state.tasks=await loadTasks(); populateDepartments(); renderKPIs(); renderStatusChart(); renderUrgent(); renderRecent(); renderReports(); bind(); setView("overview");
+  renderDate(); renderLiveTrackingDates(); state.tasks=await loadTasks(); populateDepartments(); renderKPIs(); renderStatusChart(); renderUrgent(); renderRecent(); renderReports(); bind(); setView("overview");
 }
 init().catch(err=>{document.body.innerHTML='<div style="padding:40px;font-family:Arial">Không tải được V2: '+esc(err.message)+'</div>';});
