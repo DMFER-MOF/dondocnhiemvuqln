@@ -131,7 +131,7 @@ function setView(view){
   document.querySelectorAll(".nav-item").forEach(b=>b.classList.toggle("active",b.dataset.view===view));
   ["overviewView","tasksView","reportsView"].forEach(id=>$(id).classList.add("hidden"));
   if(view==="overview"){
-    $("pageTitle").textContent="Tổng quan nhiệm vụ"; $("overviewView").classList.remove("hidden");
+    $("pageTitle").textContent="Tổng quan tình hình thực hiện nhiệm vụ"; $("overviewView").classList.remove("hidden");
   }else if(view==="reports"){
     $("pageTitle").textContent="Báo cáo nhiệm vụ"; $("reportsView").classList.remove("hidden"); renderReports();
   }else{
